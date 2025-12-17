@@ -1,1 +1,4 @@
-"# rd-03e_human_detection_arduino_uno_wifi_r2" 
+VCC -> 5V
+GND -> GND
+OT1 -> 0 RX
+RX  -> 1 TX
