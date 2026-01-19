@@ -1,11 +1,13 @@
-## Circuit
+### Circuit
 - VCC -> 5V
 - GND -> GND
 - OT1 -> 0 RX
 - RX  -> 1 TX
 
-## For Deployment
-Remove ```!Serial```
+### For Deployment
+Remove ```!Serial```.
+
+
 ```
 void setup() {
   Serial.begin(115200);
