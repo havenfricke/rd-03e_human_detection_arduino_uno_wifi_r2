@@ -24,27 +24,15 @@
 
 #include <Arduino.h>
 
-// -----------------------------
-// Types (must be above functions)
-// -----------------------------
 enum PresenceState : uint8_t { ABSENT = 0, PRESENT = 1 };
 enum ProxZone : uint8_t { ZONE_UNKNOWN = 0, ZONE_NEAR, ZONE_MID, ZONE_FAR };
 
-// -----------------------------
-// Serial settings
-// -----------------------------
 static const uint32_t SENSOR_BAUD = 250000;
 static const uint32_t DEBUG_BAUD  = 115200;
 
-// -----------------------------
-// Presence / debounce settings
-// -----------------------------
 static const uint16_t PRESENT_DEBOUNCE_MS = 250;   // consistent present required
 static const uint16_t ABSENT_HOLD_MS      = 1500;  // stay present briefly after last hit
 
-// -----------------------------
-// Proximity zones (cm) + hysteresis
-// -----------------------------
 static const uint16_t NEAR_ENTER_CM = 80;
 static const uint16_t NEAR_EXIT_CM  = 95;
 
@@ -54,28 +42,19 @@ static const uint16_t MID_EXIT_CM   = 230;
 static const uint16_t MIN_VALID_CM  = 1;
 static const uint16_t MAX_VALID_CM  = 600;
 
-// -----------------------------
-// Still-person logic (micro-motion + stable distance)
-// -----------------------------
 static const uint16_t STABLE_WINDOW_MS = 1200;
 static const uint16_t STABLE_DELTA_CM  = 3;
 
-// -----------------------------
 // Optional smoothing (simple IIR)
 // 0 = none, 100 = heavy
-// -----------------------------
 static const uint8_t SMOOTHING_PERCENT = 35;
 
-// -----------------------------
 // Frame parsing
-// -----------------------------
 static const uint8_t FRAME_LEN = 7;
 static uint8_t frameBuf[FRAME_LEN];
 static uint8_t frameIdx = 0;
 
-// -----------------------------
 // State
-// -----------------------------
 static PresenceState presence = ABSENT;
 static ProxZone zone = ZONE_UNKNOWN;
 
@@ -92,9 +71,7 @@ static uint32_t stableStartMs = 0;
 static uint16_t stableAnchorCm = 0;
 static bool stillPerson = false;
 
-// -----------------------------
 // Helpers
-// -----------------------------
 static inline bool isPresentStatus(uint8_t s) {
   return (s == 0x01 || s == 0x02);
 }
